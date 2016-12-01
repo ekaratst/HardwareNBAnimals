@@ -8,7 +8,9 @@ public class McuWithPeriBoard extends McuBoard
     private static final byte RQ_SET_LED_VALUE = 1;
     private static final byte RQ_GET_SWITCH    = 2;
     private static final byte RQ_GET_LIGHT     = 3;
-    private static final byte RQ_GET_ACCELERO  = 4;
+    private static final byte RQ_GET_ACCELERO_X  = 4;
+    private static final byte RQ_GET_ACCELERO_Y  = 5;
+    private static final byte RQ_GET_ACCELERO_Z  = 6;
 
     public McuWithPeriBoard(Device device) {
 		super(device);
@@ -59,9 +61,23 @@ public class McuWithPeriBoard extends McuBoard
     	//return (ret[0]+256)%256 + (ret[1]*256);
         //return 0;
     }
-    public int getAccelero()
+    
+    public int getAcceleroX()
     {
-    	byte[] ret = this.read(RQ_GET_ACCELERO, (short)0, (short)0);
+    	byte[] ret = this.read(RQ_GET_ACCELERO_X, (short)0, (short)0);
+    	//return ret[0];
+    	return (ret[0] & 0xFF) + (ret[1] & 0xFF)*256;
+    }
+    
+    public int getAcceleroY()
+    {
+    	byte[] ret = this.read(RQ_GET_ACCELERO_Y, (short)0, (short)0);
+    	//return ret[0];
+    	return (ret[0] & 0xFF) + (ret[1] & 0xFF)*256;
+    }
+    public int getAcceleroZ()
+    {
+    	byte[] ret = this.read(RQ_GET_ACCELERO_Z, (short)0, (short)0);
     	//return ret[0];
     	return (ret[0] & 0xFF) + (ret[1] & 0xFF)*256;
     }
